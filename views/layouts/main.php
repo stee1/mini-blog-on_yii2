@@ -4,9 +4,6 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
@@ -16,6 +13,7 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -24,53 +22,84 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
+<!--HEADER-->
+<header id="header" class="container-fluid">
+    <a href="<?= Yii::$app->urlManager->createUrl(["site/index"]) ?>">
+        <h1 class="text-center">mini-blog</h1>
+    </a>
 
+</header>
+<!--END HEADER-->
+
+<!--CONTENT-->
+<div class="content container-fluid">
+
+    <!-- POPULAR RECORDS-->
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
+        <p class="text-center form-caption">Популярные записи</p>
+
+        <?php
+        // Or image items
+        $items = [
+            ' <strong><p>Вася (<span>2016-09-14 16:11:45</span>)</p></strong>
+
+                <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
+                    beatae
+                    commodi...</p>
+               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>">
+                    <p class="comments">Коментариев <span class="badge">4</span></p>
+                </a>
+                 <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
+                    Читать полностью
+                </a>',
+            ' <strong><p>Вася (<span>2016-09-14 16:11:45</span>)</p></strong>
+
+                <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
+                    beatae
+                    commodi...</p>
+               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>">
+                    <p class="comments">Коментариев <span class="badge">4</span></p>
+                </a>
+                 <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
+                    Читать полностью
+                </a>',
+            ' <strong><p>Вася (<span>2016-09-14 16:11:45</span>)</p></strong>
+
+                <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
+                    beatae
+                    commodi...</p>
+               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>">
+                    <p class="comments">Коментариев <span class="badge">4</span></p>
+                </a>
+                 <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
+                    Читать полностью
+                </a>',
+
+        ];
+
+        echo yii2mod\bxslider\BxSlider::widget([
+            'pluginOptions' => [
+                'maxSlides' => 1,
+                'controls' => true,
+                'video' => false,
+            ],
+            'items' => $items
+        ]);
+        ?>
     </div>
+    <!-- END POPULAR RECORDS-->
+
+    <?= $content ?>
+
 </div>
+<!--END CONTENT-->
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
+<!--FOOTER-->
+<footer id="footer">
+    <h3 class="text-center">2016 ©</h3>
 </footer>
+<!--END FOOTER-->
 
 <?php $this->endBody() ?>
 </body>

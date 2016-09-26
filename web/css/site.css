@@ -89,3 +89,76 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+#header, #footer {
+    background: #ccc;
+    text-transform: uppercase;
+}
+
+#header a {
+    color: #333;
+}
+
+#header a:hover {
+    color: #555;
+    text-decoration: none;
+}
+
+#footer {
+    padding: 5px 0;
+}
+
+.content {
+    background: #eee;
+    min-height: 503px;
+}
+
+.container {
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+    -webkit-box-shadow: 2px 2px 5px #555;
+    -moz-box-shadow: 2px 2px 5px #555;
+    box-shadow: 2px 2px 5px #555;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.record-container {
+
+}
+
+p.comments {
+    display: inline;
+}
+
+p.form-caption {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.bx-viewport {
+    height: auto !important;
+}
+
+.bx-wrapper {
+    margin-bottom: 20px;
+}
+
+.content li {
+    padding-left: 50px;
+}
+
+.comments-container ul p {
+    display: inline;
+}
+
+.comments-link, .comments-link:hover {
+    color: #333;
+}
