@@ -40,7 +40,7 @@ class m160926_102827_insert_records_data extends Migration
 
     public function down()
     {
-        $this->delete("records_v2", "id > 1");
+//        $this->delete("records_v2", "id > 1");
 
 //        echo "m160926_102827_insert_records_data cannot be reverted.\n";
 //

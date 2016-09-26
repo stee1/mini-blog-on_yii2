@@ -2,12 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\Comments;
+use app\models\recordForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Records;
 
 class SiteController extends Controller
 {
@@ -53,6 +56,24 @@ class SiteController extends Controller
         ];
     }
 
+
+    //Обрезает строку до 100 символов, учитывая добавляемое "...", с учетом слов
+    public function trimTo100Char($string)
+    {
+        if ( strlen ($string) > 97) {
+            $tmp_str = mb_substr($string, 0, 97);
+            if ($tmp_str[96] != " ") {
+                $tmp_str = mb_substr($tmp_str, 0, strripos($tmp_str, " "));
+            } else {
+                $tmp_str = rtrim($tmp_str);
+            }
+            return $tmp_str . '...';
+        }
+        else {
+            return $string;
+        }
+    }
+
     /**
      * Displays homepage.
      *
@@ -60,7 +81,30 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new recordForm();
+
+        $validated = false;
+
+        $query = Records::find();
+
+        $records = $query->orderBy('date DESC')->all();
+
+
+        foreach ($records as $record) {
+            $record->trimed_text = SiteController::trimTo100Char($record->text);
+            $record->comments_count = Comments::find()->where(['id_record' => $record->id])->count();
+        }
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $validated = true;
+        }
+
+        return $this->render('index', [
+            'model' => $model,
+            'validated' => $validated,
+            'records' => $records,
+        ]);
     }
 
     /**

@@ -148,7 +148,7 @@ textarea {
 }
 
 .bx-wrapper {
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
 }
 
 .content li {

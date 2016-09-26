@@ -46,7 +46,7 @@ AppAsset::register($this);
                 <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
                     beatae
                     commodi...</p>
-               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>">
+               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="comments-link">
                     <p class="comments">Коментариев <span class="badge">4</span></p>
                 </a>
                  <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
@@ -57,7 +57,7 @@ AppAsset::register($this);
                 <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
                     beatae
                     commodi...</p>
-               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>">
+               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="comments-link">
                     <p class="comments">Коментариев <span class="badge">4</span></p>
                 </a>
                  <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
@@ -68,7 +68,7 @@ AppAsset::register($this);
                 <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
                     beatae
                     commodi...</p>
-               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>">
+               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="comments-link">
                     <p class="comments">Коментариев <span class="badge">4</span></p>
                 </a>
                  <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
