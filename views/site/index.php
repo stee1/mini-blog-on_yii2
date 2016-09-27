@@ -1,7 +1,6 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $validated \app\controllers\SiteController */
 /* @var $records \app\controllers\SiteController */
 /* @var $records_for_slider \app\controllers\SiteController */
 
@@ -25,10 +24,10 @@ use yii\widgets\ActiveForm;
         array_push($items, '<strong><p>'.Html::encode("{$record->author}").' (<span>'.Html::encode("{$record->date}").'</span>)</p></strong>
 
                 <p class="record-text">'.Html::encode("{$record->trimmed_text}").'</p>
-               <a href="'.Yii::$app->urlManager->createUrl(['site/record-id']).'" class="comments-link">
+               <a href="'.Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]).'" class="comments-link">
                     <p class="comments">Коментариев <span class="badge">'.Html::encode("{$record->comments_count}").'</span></p>
                 </a>
-                 <a href="'.Yii::$app->urlManager->createUrl(['site/record-id']).'" class="pull-right">
+                 <a href="'.Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]).'" class="pull-right">
                     Читать полностью
                 </a>');
     }
@@ -55,10 +54,10 @@ use yii\widgets\ActiveForm;
                 </p></strong>
 
             <p class="record-text"><?= Html::encode("{$record->trimmed_text}"); ?> </p>
-            <a href="<?= Yii::$app->urlManager->createUrl(['site/record-id']) ?>" class="comments-link">
+            <a href="<?= Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]) ?>" class="comments-link">
                 <p class="comments">Коментариев <span class="badge"><?= Html::encode("{$record->comments_count}"); ?></span></p>
             </a>
-            <a href="<?= Yii::$app->urlManager->createUrl(['site/record-id']) ?>" class="pull-right">
+            <a href="<?= Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]) ?>" class="pull-right">
                 Читать полностью
             </a>
         </div>

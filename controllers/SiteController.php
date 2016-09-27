@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Comments;
+use app\models\CommentsForm;
 use app\models\recordForm;
 use Yii;
 use yii\filters\AccessControl;
@@ -61,7 +62,7 @@ class SiteController extends Controller
     //Обрезает строку до 100 символов, учитывая добавляемое "...", с учетом слов
     public function trimTo100Char($string)
     {
-        if ( strlen ($string) > 97) {
+        if (strlen($string) > 97) {
             $tmp_str = mb_substr($string, 0, 97);
             if ($tmp_str[96] != " ") {
                 $tmp_str = mb_substr($tmp_str, 0, strripos($tmp_str, " "));
@@ -69,8 +70,7 @@ class SiteController extends Controller
                 $tmp_str = rtrim($tmp_str);
             }
             return $tmp_str . '...';
-        }
-        else {
+        } else {
             return $string;
         }
     }
@@ -118,7 +118,7 @@ class SiteController extends Controller
             array_unshift($records, $record);
         }
 
-       
+
         foreach ($records as $record) {
             $record->trimmed_text = SiteController::trimTo100Char($record->text);
             $record->comments_count = Comments::find()->where(['id_record' => $record->id])->count();
@@ -126,13 +126,56 @@ class SiteController extends Controller
 
         $records_for_slider = array_slice(SiteController::sortRecordsByCommentsCount($records), 0, 5, true);
 
-
-//        var_dump($records);
-
         return $this->render('index', [
             'model' => $model,
             'records' => $records,
             'records_for_slider' => $records_for_slider,
+        ]);
+    }
+
+    public function actionRecord()
+    {
+        $model = new CommentsForm();
+
+        $query = Records::find();
+        $records = $query->orderBy('date DESC')->all();
+
+        $current_record = null;
+        foreach ($records as $record) {
+            if ($record->id == Yii::$app->request->get('id')) {
+                $current_record = $record;
+            }
+        }
+
+        $query = Comments::find();
+        $comments = $query->orderBy('date')->where(['id_record' => $current_record->id])->all();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $now = new \DateTime();
+            $now->setTimezone(new \DateTimeZone('Europe/Moscow'));
+
+            $comment = new Comments();
+            $comment->id_record = $current_record->id;
+            $comment->author = Html::encode($model->author);
+            $comment->date =  $now->format('Y-m-d H:i:s');
+            $comment->text = Html::encode($model->text);
+            $comment->save();
+
+            array_push($comments, $comment);
+        }
+
+        foreach ($records as $record) {
+            $record->trimmed_text = SiteController::trimTo100Char($record->text);
+            $record->comments_count = Comments::find()->where(['id_record' => $record->id])->count();
+        }
+
+        $records_for_slider = array_slice(SiteController::sortRecordsByCommentsCount($records), 0, 5, true);
+
+        return $this->render('record', [
+            'model' => $model,
+            'records_for_slider' => $records_for_slider,
+            'current_record' => $current_record,
+            'comments' => $comments,
         ]);
     }
 
