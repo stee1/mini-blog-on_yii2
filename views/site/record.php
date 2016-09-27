@@ -12,38 +12,6 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-
-<!-- POPULAR RECORDS-->
-<div class="container">
-    <p class="text-center form-caption">Популярные записи</p>
-
-    <?php
-
-    $items = array();
-    foreach ($records_for_slider as $record) {
-        array_push($items, '<strong><p>' . Html::encode("{$record->author}") . ' (<span>' . Html::encode("{$record->date}") . '</span>)</p></strong>
-
-                <p class="record-text">' . Html::encode("{$record->trimmed_text}") . '</p>
-               <a href="' . Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]) . '" class="comments-link">
-                    <p class="comments">Коментариев <span class="badge">' . Html::encode("{$record->comments_count}") . '</span></p>
-                </a>
-                 <a href="' . Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]) . '" class="pull-right">
-                    Читать полностью
-                </a>');
-    }
-
-    echo yii2mod\bxslider\BxSlider::widget([
-        'pluginOptions' => [
-            'maxSlides' => 1,
-            'controls' => true,
-            'video' => false,
-        ],
-        'items' => $items
-    ]);
-    ?>
-</div>
-<!-- END POPULAR RECORDS-->
-
 <!-- RECORD-->
 <div class="container">
     <strong><p><?= $current_record->author ?> (<span><?= $current_record->date ?></span>)</p></strong>

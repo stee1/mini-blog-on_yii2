@@ -34,6 +34,37 @@ AppAsset::register($this);
 <!--CONTENT-->
 <div class="content container-fluid">
 
+    <!-- POPULAR RECORDS-->
+    <div class="container">
+        <p class="text-center form-caption">Популярные записи</p>
+
+        <?php
+
+        $items = array();
+        foreach ($this->params['records_for_slider'] as $record) {
+            array_push($items, '<strong><p>'.Html::encode("{$record->author}").' (<span>'.Html::encode("{$record->date}").'</span>)</p></strong>
+
+                <p class="record-text">'.Html::encode("{$record->trimmed_text}").'</p>
+               <a href="'.Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]).'" class="comments-link">
+                    <p class="comments">Коментариев <span class="badge">'.Html::encode("{$record->comments_count}").'</span></p>
+                </a>
+                 <a href="'.Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]).'" class="pull-right">
+                    Читать полностью
+                </a>');
+        }
+
+        echo yii2mod\bxslider\BxSlider::widget([
+            'pluginOptions' => [
+                'maxSlides' => 1,
+                'controls' => true,
+                'video' => false,
+            ],
+            'items' => $items
+        ]);
+        ?>
+    </div>
+    <!-- END POPULAR RECORDS-->
+
     <?= $content ?>
 
 </div>

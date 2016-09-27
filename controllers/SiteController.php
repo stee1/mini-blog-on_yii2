@@ -126,10 +126,11 @@ class SiteController extends Controller
 
         $records_for_slider = array_slice(SiteController::sortRecordsByCommentsCount($records), 0, 5, true);
 
+        $this->view->params['records_for_slider'] = $records_for_slider;
+
         return $this->render('index', [
             'model' => $model,
             'records' => $records,
-            'records_for_slider' => $records_for_slider,
         ]);
     }
 
@@ -171,9 +172,10 @@ class SiteController extends Controller
 
         $records_for_slider = array_slice(SiteController::sortRecordsByCommentsCount($records), 0, 5, true);
 
+        $this->view->params['records_for_slider'] = $records_for_slider;
+
         return $this->render('record', [
             'model' => $model,
-            'records_for_slider' => $records_for_slider,
             'current_record' => $current_record,
             'comments' => $comments,
         ]);
