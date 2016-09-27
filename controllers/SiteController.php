@@ -6,6 +6,7 @@ use app\models\Comments;
 use app\models\recordForm;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -74,6 +75,24 @@ class SiteController extends Controller
         }
     }
 
+    public function sortRecordsByCommentsCount($records)
+    {
+        $result = $records;
+
+        for ($i = 0; $i < count($result); $i++) {
+            for ($j = 0; $j < count($result); $j++) {
+                if ($result[$i]->comments_count > $result[$j]->comments_count) {
+                    $tmp = $result[$j];
+                    $result[$j] = $result[$i];
+                    $result[$i] = $tmp;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+
     /**
      * Displays homepage.
      *
@@ -83,27 +102,37 @@ class SiteController extends Controller
     {
         $model = new recordForm();
 
-        $validated = false;
-
         $query = Records::find();
-
         $records = $query->orderBy('date DESC')->all();
 
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $now = new \DateTime();
+            $now->setTimezone(new \DateTimeZone('Europe/Moscow'));
 
+            $record = new Records();
+            $record->author = Html::encode($model->author);
+            $record->date = $now->format('Y-m-d H:i:s');
+            $record->text = Html::encode($model->text);
+            $record->save();
+
+            array_unshift($records, $record);
+        }
+
+       
         foreach ($records as $record) {
-            $record->trimed_text = SiteController::trimTo100Char($record->text);
+            $record->trimmed_text = SiteController::trimTo100Char($record->text);
             $record->comments_count = Comments::find()->where(['id_record' => $record->id])->count();
         }
 
+        $records_for_slider = array_slice(SiteController::sortRecordsByCommentsCount($records), 0, 5, true);
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $validated = true;
-        }
+
+//        var_dump($records);
 
         return $this->render('index', [
             'model' => $model,
-            'validated' => $validated,
             'records' => $records,
+            'records_for_slider' => $records_for_slider,
         ]);
     }
 

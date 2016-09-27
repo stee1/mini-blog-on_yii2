@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $validated \app\controllers\SiteController */
 /* @var $records \app\controllers\SiteController */
+/* @var $records_for_slider \app\controllers\SiteController */
 
 $this->title = 'Mini-blog | Все записи';
 
@@ -11,16 +12,49 @@ use yii\widgets\ActiveForm;
 
 ?>
 
+<!-- POPULAR RECORDS-->
+<div class="container">
+    <p class="text-center form-caption">Популярные записи</p>
+
+    <?php
+
+//    var_dump($records);
+
+    $items = array();
+    foreach ($records_for_slider as $record) {
+        array_push($items, '<strong><p>'.Html::encode("{$record->author}").' (<span>'.Html::encode("{$record->date}").'</span>)</p></strong>
+
+                <p class="record-text">'.Html::encode("{$record->trimmed_text}").'</p>
+               <a href="'.Yii::$app->urlManager->createUrl(['site/record-id']).'" class="comments-link">
+                    <p class="comments">Коментариев <span class="badge">'.Html::encode("{$record->comments_count}").'</span></p>
+                </a>
+                 <a href="'.Yii::$app->urlManager->createUrl(['site/record-id']).'" class="pull-right">
+                    Читать полностью
+                </a>');
+    }
+
+    echo yii2mod\bxslider\BxSlider::widget([
+        'pluginOptions' => [
+            'maxSlides' => 1,
+            'controls' => true,
+            'video' => false,
+        ],
+        'items' => $items
+    ]);
+    ?>
+</div>
+<!-- END POPULAR RECORDS-->
+
 <!-- LIST ALL RECORDS-->
 <div id="all-records">
 
     <!-- RECORD-->
-    <?php foreach ($records as $record): ?>
+    <?php foreach ($records as $record) { ?>
         <div class="container">
             <strong><p><?= Html::encode("{$record->author}"); ?> (<span><?= Html::encode("{$record->date}"); ?></span>)
                 </p></strong>
 
-            <p class="record-text"><?= Html::encode("{$record->trimed_text}"); ?> </p>
+            <p class="record-text"><?= Html::encode("{$record->trimmed_text}"); ?> </p>
             <a href="<?= Yii::$app->urlManager->createUrl(['site/record-id']) ?>" class="comments-link">
                 <p class="comments">Коментариев <span class="badge"><?= Html::encode("{$record->comments_count}"); ?></span></p>
             </a>
@@ -28,7 +62,7 @@ use yii\widgets\ActiveForm;
                 Читать полностью
             </a>
         </div>
-    <?php endforeach; ?>
+    <?php } ?>
     <!-- END RECORD-->
 
 </div>

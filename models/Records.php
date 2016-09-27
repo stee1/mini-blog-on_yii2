@@ -11,8 +11,8 @@ use yii\db\ActiveRecord;
 
 class Records extends ActiveRecord {
 
-    public $comments_count = 0;
-    public $trimed_text = "";
+    public $comments_count;
+    public $trimmed_text;
 
     public static function tableName()
     {

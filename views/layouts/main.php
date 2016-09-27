@@ -34,61 +34,6 @@ AppAsset::register($this);
 <!--CONTENT-->
 <div class="content container-fluid">
 
-    <!-- POPULAR RECORDS-->
-    <div class="container">
-        <p class="text-center form-caption">Популярные записи</p>
-
-        <?php
-        // Or image items
-        $items = [
-            ' <strong><p>Вася (<span>2016-09-14 16:11:45</span>)</p></strong>
-
-                <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
-                    beatae
-                    commodi...</p>
-               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="comments-link">
-                    <p class="comments">Коментариев <span class="badge">4</span></p>
-                </a>
-                 <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
-                    Читать полностью
-                </a>',
-            ' <strong><p>Вася (<span>2016-09-14 16:11:45</span>)</p></strong>
-
-                <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
-                    beatae
-                    commodi...</p>
-               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="comments-link">
-                    <p class="comments">Коментариев <span class="badge">4</span></p>
-                </a>
-                 <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
-                    Читать полностью
-                </a>',
-            ' <strong><p>Вася (<span>2016-09-14 16:11:45</span>)</p></strong>
-
-                <p class="record-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi atque aut
-                    beatae
-                    commodi...</p>
-               <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="comments-link">
-                    <p class="comments">Коментариев <span class="badge">4</span></p>
-                </a>
-                 <a href="<?=Yii::$app->urlManager->createUrl([\'site/record-id\'])?>" class="pull-right">
-                    Читать полностью
-                </a>',
-
-        ];
-
-        echo yii2mod\bxslider\BxSlider::widget([
-            'pluginOptions' => [
-                'maxSlides' => 1,
-                'controls' => true,
-                'video' => false,
-            ],
-            'items' => $items
-        ]);
-        ?>
-    </div>
-    <!-- END POPULAR RECORDS-->
-
     <?= $content ?>
 
 </div>
