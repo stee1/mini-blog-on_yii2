@@ -5,7 +5,7 @@
 /* @var $records_for_slider \app\controllers\SiteController */
 /* @var $comments \app\controllers\SiteController */
 
-$this->title = 'Mini-blog | ' . $current_record->author . '(' . $current_record->date . ')';
+$this->title = 'Mini-blog | ' . $current_record->author . ' (' . $current_record->date . ')';
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
