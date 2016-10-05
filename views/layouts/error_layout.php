@@ -27,7 +27,6 @@ AppAsset::register($this);
     <a href="<?= Yii::$app->urlManager->createUrl(["site/index"]) ?>">
         <h1 class="text-center">mini-blog</h1>
     </a>
-
 </header>
 <!--END HEADER-->
 

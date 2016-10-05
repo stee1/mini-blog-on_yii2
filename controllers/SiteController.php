@@ -4,6 +4,9 @@ namespace app\controllers;
 
 use app\components\GoodException;
 use Yii;
+use yii\base\Exception;
+use yii\base\ExitException;
+use yii\base\UserException;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\web\Controller;
@@ -12,6 +15,7 @@ use app\models\Comments;
 use app\models\CommentsForm;
 use app\models\recordForm;
 use app\models\Records;
+use yii\web\HttpException;
 
 
 class SiteController extends Controller
@@ -109,8 +113,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
-        throw new GoodException('Проблемка', 'Эта проблема аккуратно обрабатывается');
+//        throw new HttpException(400, 'Ошибочка', 405);
 
         $model = new recordForm();
 
