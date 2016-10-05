@@ -2,20 +2,29 @@
 
 namespace app\controllers;
 
-use app\models\Comments;
-use app\models\CommentsForm;
-use app\models\recordForm;
+use app\components\GoodException;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use app\models\Comments;
+use app\models\CommentsForm;
+use app\models\recordForm;
 use app\models\Records;
+
 
 class SiteController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if ($action->id == 'error') {
+            $this->layout = 'error_layout';
+        }
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * @inheritdoc
      */
@@ -59,7 +68,7 @@ class SiteController extends Controller
     }
 
 
-    //Œ·ÂÁ‡ÂÚ ÒÚÓÍÛ ‰Ó 100 ÒËÏ‚ÓÎÓ‚, Û˜ËÚ˚‚‡ˇ ‰Ó·‡‚ÎˇÂÏÓÂ "...", Ò Û˜ÂÚÓÏ ÒÎÓ‚
+    //–û–±—Ä–µ–∑–∞–µ—Ç —Å—Ç—Ä–æ–∫—É –¥–æ 100 —Å–∏–º–≤–æ–ª–æ–≤, —É—á–∏—Ç—ã–≤–∞—è –¥–æ–±–∞–≤–ª—è–µ–º–æ–µ "...", —Å —É—á–µ—Ç–æ–º —Å–ª–æ–≤
     public function trimTo100Char($string)
     {
         if (strlen($string) > 97) {
@@ -100,6 +109,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
+        throw new GoodException('–ü—Ä–æ–±–ª–µ–º–∫–∞', '–≠—Ç–∞ –ø—Ä–æ–±–ª–µ–º–∞ –∞–∫–∫—É—Ä–∞—Ç–Ω–æ –æ–±—Ä–∞–±–∞—Ç—ã–≤–∞–µ—Ç—Å—è');
+
         $model = new recordForm();
 
         $query = Records::find();
