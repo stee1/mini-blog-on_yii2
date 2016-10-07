@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\GoodException;
 use Yii;
+use yii\base\ErrorException;
 use yii\base\Exception;
 use yii\base\ExitException;
 use yii\base\UserException;
@@ -169,7 +170,12 @@ class SiteController extends Controller
         }
 
         $query = Comments::find();
-        $comments = $query->orderBy('date')->where(['id_record' => $current_record->id])->all();
+        try {
+            $comments = $query->orderBy('date')->where(['id_record' => $current_record->id])->all();
+        }
+        catch (ErrorException $e) {
+            throw new HttpException(400, 'Такого пользователя не существует :(', 405);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $now = new \DateTime();
