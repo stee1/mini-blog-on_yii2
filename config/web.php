@@ -12,7 +12,7 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                //...
+                '<alias:index|record>' => 'site/<alias>',
             ],
         ],
         'request' => [
