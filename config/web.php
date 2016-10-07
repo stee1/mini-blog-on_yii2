@@ -12,7 +12,18 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                '<alias:index|record>' => 'site/<alias>',
+                '' => 'site/index',
+                'record/<id:\d+>' => 'site/record',
+//                [
+//                    'pattern' => '<action>/<id:\d+>',
+//                    'route' => '<action>',
+//                    'suffix' => ''
+//                ],
+//                [
+//                    'pattern' => '<controller>/<action>',
+//                    'route' => '<controller>/<action>',
+//                    'suffix' => ''
+//                ],
             ],
         ],
         'request' => [
