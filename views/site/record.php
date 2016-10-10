@@ -42,19 +42,18 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'id' => 'form-input-comment',
         'options' => [
-            'class' => 'form-horizontal col-xs-12'
+            'class' => 'form-horizontal col-xs-12',
+            'validate-with-icons' => 1,
         ],
         'fieldConfig' => [
-            'template' => '{label}<div class="col-xs-11">{input}</div><div class="col-xs-12 col-xs-offset-1">{error}</div>',
+            'template' => '{label}<div class="col-xs-11 has-feedback">{input}<span class="form-control-feedback"></span>{error}</div>',
             'labelOptions' => ['class' => 'col-xs-1 control-label'],
         ],
     ]); ?>
 
     <?= $form->field($model, 'author')->label('Автор')->textInput(['placeholder' => 'Имя']); ?>
-    <!--                <span class="glyphicon form-control-feedback" id="recordform-author"></span>-->
 
     <?= $form->field($model, 'text')->textarea(['placeholder' => 'Текст комментария', 'rows' => '3'])->label("Текст") ?>
-    <!--                <span class="glyphicon form-control-feedback" id="inputText1"></span>-->
 
     <div class="form-group">
         <div class="col-xs-12">
@@ -65,3 +64,19 @@ use yii\widgets\ActiveForm;
 </div>
 
 <!-- END FORM NEW RECORD-->
+
+<?php
+$this->registerJs("
+//правило для валидации только формы с иконками
+    $('form[validate-with-icons=1]').on('afterValidateAttribute', function (event, attribute, messages) {
+
+        // результат валидации
+        var hasError = messages.length !== 0;
+
+        if(hasError)
+            $(attribute.input).parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-ok').addClass('glyphicon glyphicon-remove');
+        else
+            $(attribute.input).parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-remove').addClass('glyphicon glyphicon-ok');
+
+    });"
+);?>

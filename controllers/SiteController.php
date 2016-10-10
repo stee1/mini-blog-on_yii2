@@ -2,19 +2,15 @@
 
 namespace app\controllers;
 
-use app\components\GoodException;
 use Yii;
 use yii\base\ErrorException;
-use yii\base\Exception;
-use yii\base\ExitException;
-use yii\base\UserException;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\Comments;
 use app\models\CommentsForm;
-use app\models\recordForm;
+use app\models\RecordForm;
 use app\models\Records;
 use yii\web\HttpException;
 
@@ -116,7 +112,7 @@ class SiteController extends Controller
     {
 //        throw new HttpException(400, 'Ошибочка', 405);
 
-        $model = new recordForm();
+        $model = new RecordForm();
 
         $query = Records::find();
         $records = $query->orderBy('date DESC')->all();
