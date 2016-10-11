@@ -126,6 +126,16 @@ a.desc:after {
     border-radius: 5px;
 }
 
+.container.my-summary {
+    padding: 0;
+    margin: auto;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background: none;
+    border: none;
+}
+
 .record-container {
 
 }
@@ -162,4 +172,8 @@ textarea {
 
 .comments-link, .comments-link:hover {
     color: #333;
+}
+
+.pagination {
+    padding-left: 250px;
 }

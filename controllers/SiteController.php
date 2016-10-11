@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use yii\base\ErrorException;
+use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\web\Controller;
@@ -103,9 +105,17 @@ class SiteController extends Controller
 
         $this->view->params['records_for_slider'] = $records_for_slider;
 
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $records,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
         return $this->render('index', [
             'model' => $model,
             'records' => $records,
+            'listDataProvider' => $dataProvider,
         ]);
     }
 

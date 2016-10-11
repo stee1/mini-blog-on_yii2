@@ -2,36 +2,52 @@
 
 /* @var $this yii\web\View */
 /* @var $records \app\controllers\SiteController */
+/* @var $listDataProvider \app\controllers\SiteController */
 
 $this->title = 'Mini-blog | Все записи';
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\ListView;
 
 ?>
 
 
 <!-- LIST ALL RECORDS-->
-<div id="all-records">
 
     <!-- RECORD-->
-    <?php foreach ($records as $record) { ?>
-        <div class="container">
-            <strong><p><?= Html::encode("{$record->author}"); ?> (<span><?= Html::encode("{$record->date}"); ?></span>)
-                </p></strong>
+    <?php
+    echo ListView::widget([
+        'dataProvider' => $listDataProvider,
 
-            <p class="record-text"><?= Html::encode("{$record->trimmed_text}"); ?> </p>
-            <a href="<?= Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]) ?>" class="comments-link">
-                <p class="comments">Коментариев <span class="badge"><?= Html::encode("{$record->comments_count}"); ?></span></p>
-            </a>
-            <a href="<?= Yii::$app->urlManager->createUrl(['site/record', 'id' => $record->id]) ?>" class="pull-right">
-                Читать полностью
-            </a>
-        </div>
-    <?php } ?>
+        'itemView' => '_list',
+        'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'container',
+        ],
+
+        'options' => [
+            'tag' => 'div',
+            'id' => 'all-records',
+        ],
+
+        'layout' => "{items}\n<div class='container my-summary'>{summary}</div>\n<div class='text-center'>{pager}</div>",
+        'summary' => 'Показано {begin}-{end} из {totalCount} записей',
+
+        'emptyText' => 'Записей в блоге еще не было',
+        'emptyTextOptions' => [
+            'tag' => 'p'
+        ],
+
+        'pager' => [
+            'prevPageLabel' => '<span class="glyphicon glyphicon-chevron-left"></span>',
+            'nextPageLabel' => '<span class="glyphicon glyphicon-chevron-right"></span>',
+            'maxButtonCount' => 3,
+        ],
+    ]);
+    ?>
     <!-- END RECORD-->
 
-</div>
 <!-- END LIST ALL RECORDS-->
 
 <!-- FORM NEW RECORD-->
