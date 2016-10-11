@@ -67,42 +67,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
-
-    //Обрезает строку до 100 символов, учитывая добавляемое "...", с учетом слов
-    public function trimTo100Char($string)
-    {
-        if (strlen($string) > 97) {
-            $tmp_str = mb_substr($string, 0, 97);
-            if ($tmp_str[96] != " ") {
-                $tmp_str = mb_substr($tmp_str, 0, strripos($tmp_str, " "));
-            } else {
-                $tmp_str = rtrim($tmp_str);
-            }
-            return $tmp_str . '...';
-        } else {
-            return $string;
-        }
-    }
-
-    public function sortRecordsByCommentsCount($records)
-    {
-        $result = $records;
-
-        for ($i = 0; $i < count($result); $i++) {
-            for ($j = 0; $j < count($result); $j++) {
-                if ($result[$i]->comments_count > $result[$j]->comments_count) {
-                    $tmp = $result[$j];
-                    $result[$j] = $result[$i];
-                    $result[$i] = $tmp;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-
     /**
      * Displays homepage.
      *
@@ -130,13 +94,12 @@ class SiteController extends Controller
             array_unshift($records, $record);
         }
 
-
         foreach ($records as $record) {
-            $record->trimmed_text = SiteController::trimTo100Char($record->text);
+            $record->trimmed_text = $model->trimTo100Char(($record->text));
             $record->comments_count = Comments::find()->where(['id_record' => $record->id])->count();
         }
 
-        $records_for_slider = array_slice(SiteController::sortRecordsByCommentsCount($records), 0, 5, true);
+        $records_for_slider = array_slice($model->sortRecordsByCommentsCount($records), 0, 5, true);
 
         $this->view->params['records_for_slider'] = $records_for_slider;
 
@@ -147,9 +110,8 @@ class SiteController extends Controller
     }
 
     /**
-     * Record action.
-     *
      * @return string
+     * @throws HttpException
      */
     public function actionRecord()
     {
@@ -170,7 +132,7 @@ class SiteController extends Controller
             $comments = $query->orderBy('date')->where(['id_record' => $current_record->id])->all();
         }
         catch (ErrorException $e) {
-            throw new HttpException(400, 'Такого пользователя не существует :(', 405);
+            throw new HttpException(400, 'Такой записи не существует :(', 405);
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -187,12 +149,14 @@ class SiteController extends Controller
             array_push($comments, $comment);
         }
 
+        $modelRecord = new RecordForm();
+
         foreach ($records as $record) {
-            $record->trimmed_text = SiteController::trimTo100Char($record->text);
+            $record->trimmed_text =  $modelRecord->trimTo100Char($record->text);
             $record->comments_count = Comments::find()->where(['id_record' => $record->id])->count();
         }
 
-        $records_for_slider = array_slice(SiteController::sortRecordsByCommentsCount($records), 0, 5, true);
+        $records_for_slider = array_slice($modelRecord->sortRecordsByCommentsCount($records), 0, 5, true);
 
         $this->view->params['records_for_slider'] = $records_for_slider;
 
