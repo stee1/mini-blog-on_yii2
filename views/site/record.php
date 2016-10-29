@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <!-- RECORD-->
-<div class="container">
+<div class="container container-wrapper">
     <strong><p><?= $current_record->author ?> (<span><?= $current_record->date ?></span>)</p></strong>
 
     <p class="record-text"><?= $current_record->text ?></p>
@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
 <!-- END RECORD-->
 
 <!-- FORM NEW RECORD-->
-<div class="container">
+<div class="container container-wrapper">
     <p class="form-caption">Добавить комментарий</p>
 
     <?php $form = ActiveForm::begin([
@@ -64,19 +64,3 @@ use yii\widgets\ActiveForm;
 </div>
 
 <!-- END FORM NEW RECORD-->
-
-<?php
-$this->registerJs("
-//правило для валидации только формы с иконками
-    $('form[validate-with-icons=1]').on('afterValidateAttribute', function (event, attribute, messages) {
-
-        // результат валидации
-        var hasError = messages.length !== 0;
-
-        if(hasError)
-            $(attribute.input).parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-ok').addClass('glyphicon glyphicon-remove');
-        else
-            $(attribute.input).parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-remove').addClass('glyphicon glyphicon-ok');
-
-    });"
-);?>

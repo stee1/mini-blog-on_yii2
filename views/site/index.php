@@ -12,7 +12,6 @@ use yii\widgets\ListView;
 
 ?>
 
-
 <!-- LIST ALL RECORDS-->
 
     <!-- RECORD-->
@@ -23,7 +22,7 @@ use yii\widgets\ListView;
         'itemView' => '_list',
         'itemOptions' => [
             'tag' => 'div',
-            'class' => 'container',
+            'class' => 'container container-wrapper',
         ],
 
         'options' => [
@@ -31,7 +30,7 @@ use yii\widgets\ListView;
             'id' => 'all-records',
         ],
 
-        'layout' => "{items}\n<div class='container my-summary'>{summary}</div>\n<div class='text-center'>{pager}</div>",
+        'layout' => "{items}\n<div class='container  my-summary'>{summary}</div>\n<div class='text-center'>{pager}</div>",
         'summary' => 'Показано {begin}-{end} из {totalCount} записей',
 
         'emptyText' => 'Записей в блоге еще не было',
@@ -51,7 +50,7 @@ use yii\widgets\ListView;
 <!-- END LIST ALL RECORDS-->
 
 <!-- FORM NEW RECORD-->
-<div class="container">
+<div class="container container-wrapper">
     <p class="form-caption">Добавить запись</p>
 
     <?php $form = ActiveForm::begin([
@@ -79,19 +78,3 @@ use yii\widgets\ListView;
 </div>
 
 <!-- END FORM NEW RECORD-->
-
-<?php
-$this->registerJs("
-//правило для валидации только формы с иконками
-    $('form[validate-with-icons=1]').on('afterValidateAttribute', function (event, attribute, messages) {
-
-        // результат валидации
-        var hasError = messages.length !== 0;
-
-        if(hasError)
-            $(attribute.input).parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-ok').addClass('glyphicon glyphicon-remove');
-        else
-            $(attribute.input).parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-remove').addClass('glyphicon glyphicon-ok');
-
-    });"
-);?>

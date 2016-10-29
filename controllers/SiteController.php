@@ -2,9 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\LoginForm;
+use app\models\RegForm;
 use Yii;
 use yii\base\ErrorException;
-use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
@@ -14,6 +15,7 @@ use app\models\Comments;
 use app\models\CommentsForm;
 use app\models\RecordForm;
 use app\models\Records;
+use app\models\User;
 use yii\web\HttpException;
 
 
@@ -120,6 +122,77 @@ class SiteController extends Controller
     }
 
     /**
+     * Registration
+     *
+     * @return string
+     */
+    public function actionReg()
+    {
+        $this->layout = 'reg_login';
+
+        $model = new RegForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()):
+            if ($user = $model->reg()):
+                if ($user->status === User::STATUS_ACTIVE):
+                    if (Yii::$app->getUser()->login($user)):
+                        return $this->goHome();
+                    endif;
+                endif;
+            else:
+                Yii::$app->session->setFlash('error', 'Возникла ошибка регистрации');
+                Yii::error('Ошибка при регистрации');
+                return $this->redirect(\Yii::$app->request->getReferrer());
+            endif;
+        endif;
+
+
+        return $this->render('reg', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Login
+     *
+     * @return string
+     */
+    public function actionLogin()
+    {
+        if (!Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+
+        $this->layout = 'reg_login';
+
+        $model = new LoginForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->login()):
+            $this->goBack();
+        endif;
+
+
+
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Logout action.
+     *
+     * @return string
+     */
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return $this->goHome();
+    }
+
+    /**
+     * Display record
+     *
      * @return string
      * @throws HttpException
      */

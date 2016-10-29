@@ -25,7 +25,7 @@ class CommentsForm extends Model
         ];
     }
 
-    public function validateAuthorName($attribute, $params)
+    public function validateAuthorName($attribute)
     {
 //            if (!preg_match("/^[a-z(абвгдеёжизклмопрстуфхцчшщьъыэюя)(АБВГДЕЁЖИЗКЛМОПРСТУФХЦЧШЩЬЪЫЭЮЯ)0-9]+$/i", $attribute)) {
         $this->addError($attribute, 'Имя автора должно состоять только из цифр и букв (англ. или рус.) без пробелов');
