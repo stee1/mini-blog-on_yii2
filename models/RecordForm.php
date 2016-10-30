@@ -18,13 +18,17 @@ class RecordForm extends Model {
         return [
             [['author'], 'required', 'message' => 'Имя автора не должно быть пустым'],
             [['author'], 'string', 'min' => 3, 'max' => 30, 'message' => 'Имя автора должно быть длинной от 3 до 30 символов'],
-            [['author'],  function ($attribute, $params) {
-                if (!preg_match("/^[a-z(абвгдеёжизклмопрстуфхцчшщьъыэюя)(АБВГДЕЁЖИЗКЛМОПРСТУФХЦЧШЩЬЪЫЭЮЯ)0-9]+$/i", $this->$attribute)) {
-                    $this->addError($attribute, 'Имя автора должно состоять только из цифр и букв (англ. или рус.) без пробелов');
-                }
-            }],
+            [['author'],  'validateAuthorName'],
             [['text'], 'required', 'message' => 'Введите текст публикации'],
         ];
+    }
+
+    public function validateAuthorName($attribute, $params)
+    {
+        //регулярка не правильная
+//        if (!preg_match("/^[a-z(абвгдеёжизклмопрстуфхцчшщьъыэюя)(АБВГДЕЁЖИЗКЛМОПРСТУФХЦЧШЩЬЪЫЭЮЯ)0-9]+$/i", $this->$attribute)) {
+//            $this->addError($attribute, 'Имя автора должно состоять только из цифр и букв (англ. или рус.) без пробелов');
+//        }
     }
 
     /**

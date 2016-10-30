@@ -25,10 +25,11 @@ class CommentsForm extends Model
         ];
     }
 
-    public function validateAuthorName($attribute)
+    public function validateAuthorName($attribute, $params)
     {
-//            if (!preg_match("/^[a-z(абвгдеёжизклмопрстуфхцчшщьъыэюя)(АБВГДЕЁЖИЗКЛМОПРСТУФХЦЧШЩЬЪЫЭЮЯ)0-9]+$/i", $attribute)) {
-        $this->addError($attribute, 'Имя автора должно состоять только из цифр и букв (англ. или рус.) без пробелов');
-//            }
+        //регулярка не правильная
+//        if (!preg_match("/^[a-z(абвгдеёжизклмопрстуфхцчшщьъыэюя)(АБВГДЕЁЖИЗКЛМОПРСТУФХЦЧШЩЬЪЫЭЮЯ)0-9]+$/i", $this->$attribute)) {
+//            $this->addError($attribute, 'Имя автора должно состоять только из цифр и букв (англ. или рус.) без пробелов');
+//        }
     }
 }

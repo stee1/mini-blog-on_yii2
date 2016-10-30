@@ -7,10 +7,7 @@ use app\models\RegForm;
 use Yii;
 use yii\base\ErrorException;
 use yii\data\ArrayDataProvider;
-use yii\filters\AccessControl;
 use yii\helpers\Html;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
 use app\models\Comments;
 use app\models\CommentsForm;
 use app\models\RecordForm;
@@ -19,7 +16,7 @@ use app\models\User;
 use yii\web\HttpException;
 
 
-class SiteController extends Controller
+class SiteController extends BehaviorsController
 {
     public function beforeAction($action)
     {
@@ -28,32 +25,6 @@ class SiteController extends Controller
         }
 
         return parent::beforeAction($action);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
     }
 
     /**

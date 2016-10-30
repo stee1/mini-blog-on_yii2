@@ -40,7 +40,7 @@ class LoginForm extends Model {
             endif;
         endif;
     }
-    
+
     public function getUser(){
         if ($this->_user === false) {
             $this->_user = User::findByUsername($this->username);
