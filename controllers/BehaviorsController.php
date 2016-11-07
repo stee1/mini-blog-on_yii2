@@ -33,13 +33,13 @@ class BehaviorsController extends Controller
                         'allow' => true,
                         'controllers' => ['site'],
                         'actions' => ['logout'],
-                        'verbs' => ['POST'],
+                        'verbs' => ['GET', 'POST'],
                         'roles' => ['@']
                     ],
                     [
                         'allow' => true,
                         'controllers' => ['site'],
-                        'actions' => ['index', 'record'],
+                        'actions' => ['index', 'record', 'error'],
                     ]
                 ]
             ]

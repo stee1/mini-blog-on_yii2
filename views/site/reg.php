@@ -13,12 +13,6 @@ $this->title = 'Регистрация';
 
     <?php $form = ActiveForm::begin(); ?>
 
-        <?php if(Yii::$app->session->hasFlash('error')): ?>
-            <div class="alert alert-danger">
-                <?= Yii::$app->session->getFlash('error') ?>
-            </div>
-        <?php endif; ?>﻿
-
         <?= $form->field($model, 'username') ?>
         <?= $form->field($model, 'email') ?>
         <?= $form->field($model, 'password')->passwordInput() ?>

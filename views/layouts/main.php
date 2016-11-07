@@ -3,8 +3,10 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use yii\bootstrap\Button;
 use yii\helpers\Html;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -58,6 +60,8 @@ AppAsset::register($this);
         ?>
     </div>
     <!-- END POPULAR RECORDS-->
+
+    <?= \app\components\AlertWidget::widget() ?>
 
     <?= $content ?>
 

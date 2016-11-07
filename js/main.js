@@ -2,6 +2,11 @@
  * Created by dmitry on 28.10.2016.
  */
 
+$(function () {
+    $('[data-toggle="popover"]').popover({html:true})
+});
+
+
 $('form[validate-with-icons=1]').on('afterValidateAttribute', function (event, attribute, messages) {
     var hasError = messages.length !== 0;
 
