@@ -1,25 +1,33 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\LoginForm */
-/* @var $form ActiveForm */
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model \mdm\admin\models\form\Login */
 
-$this->title = 'Вход';
+$this->title = 'Login';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
+    <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <p>Please fill out the following fields to login:</p>
 
-        <?= $form->field($model, 'username') ?>
-        <?= $form->field($model, 'password')->passwordInput() ?>
-        <?= $form->field($model, 'rememberMe')->checkbox() ?>
-    
-        <div class="form-group">
-            <?= Html::submitButton('Войти', ['class' => 'btn btn-primary']) ?>
+    <div class="row">
+        <div class="col-lg-5">
+            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+            <?= $form->field($model, 'username') ?>
+            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            <div style="color:#999;margin:1em 0">
+                If you forgot your password you can <?= Html::a('reset it', ['user/request-password-reset']) ?>.
+                For new user you can <?= Html::a('signup', ['user/signup']) ?>.
+            </div>
+            <div class="form-group">
+                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
         </div>
-    <?php ActiveForm::end(); ?>
-
-</div><!-- site-login -->
+    </div>
+</div>

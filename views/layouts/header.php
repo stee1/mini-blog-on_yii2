@@ -50,8 +50,10 @@ else {
         </button>
     </div>
     <?php
+    $menuItems = [
+        ['label' => 'Админка', 'url' => ['/admin']]
+    ];
 }
-
 
 echo Nav::widget([
     'items' => $menuItems,

@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\LoginForm;
-use app\models\RegForm;
+use app\models\LoginForm as Login;
+use app\models\RegForm as Signup;
 use Yii;
 use yii\base\ErrorException;
 use yii\data\ArrayDataProvider;
@@ -13,10 +13,11 @@ use app\models\CommentsForm;
 use app\models\RecordForm;
 use app\models\Records;
 use app\models\User;
+use yii\web\Controller;
 use yii\web\HttpException;
 
 
-class SiteController extends BehaviorsController
+class SiteController extends Controller
 {
     public function beforeAction($action)
     {
@@ -89,58 +90,42 @@ class SiteController extends BehaviorsController
     }
 
     /**
-     * Registration
-     *
-     * @return string
-     */
-    public function actionReg()
-    {
-        $this->layout = 'reg_login';
-
-        $model = new RegForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()):
-            if ($user = $model->reg()):
-                if ($user->status === User::STATUS_ACTIVE):
-                    if (Yii::$app->getUser()->login($user)):
-                        return $this->goHome();
-                    endif;
-                endif;
-            else:
-                Yii::$app->session->setFlash('error', 'Возникла ошибка регистрации');
-                Yii::error('Ошибка при регистрации');
-                return $this->redirect(\Yii::$app->request->getReferrer());
-            endif;
-        endif;
-
-
-        return $this->render('reg', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
      * Login
-     *
      * @return string
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest){
+        if (!Yii::$app->getUser()->isGuest) {
             return $this->goHome();
         }
 
         $this->layout = 'reg_login';
+        $model = new Login();
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
+            return $this->goBack();
+        } else {
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+    }
 
-        $model = new LoginForm();
+    /**
+     * Signup new user
+     * @return string
+     */
+    public function actionReg()
+    {
 
-        if ($model->load(Yii::$app->request->post()) && $model->login()):
-            $this->goBack();
-        endif;
+        $this->layout = 'reg_login';
+        $model = new Signup();
+        if ($model->load(Yii::$app->getRequest()->post())) {
+            if ($user = $model->signup()) {
+                return $this->goHome();
+            }
+        }
 
-
-
-        return $this->render('login', [
+        return $this->render('reg', [
             'model' => $model,
         ]);
     }

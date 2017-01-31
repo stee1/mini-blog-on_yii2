@@ -39,7 +39,15 @@ use yii\widgets\ActiveForm;
 <div class="container container-wrapper">
     <p class="form-caption">Добавить комментарий</p>
 
-    <?php $form = ActiveForm::begin([
+    <?php if (!Yii::$app->user->can('writeComments')) {
+        ?>
+        <p>Вы не можете оставлять комментарии.</p>
+        <a href="/mini-blog-v2/site/login">Авторизироваться</a>
+        <!--        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <?php
+    }
+    else {
+     $form = ActiveForm::begin([
         'id' => 'form-input-comment',
         'options' => [
             'class' => 'form-horizontal col-xs-12',
@@ -60,7 +68,7 @@ use yii\widgets\ActiveForm;
             <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary pull-right']) ?>
         </div>
     </div>
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); }?>
 </div>
 
 <!-- END FORM NEW RECORD-->

@@ -53,7 +53,14 @@ use yii\widgets\ListView;
 <div class="container container-wrapper">
     <p class="form-caption">Добавить запись</p>
 
-    <?php $form = ActiveForm::begin([
+    <?php if (!Yii::$app->user->can('writePosts')) {
+        ?>
+        <p>Вы не можете добавлять записи.</p>
+        <a href="/mini-blog-v2/site/login">Авторизироваться</a>
+<!--        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        <?php
+    }
+    else { $form = ActiveForm::begin([
         'id' => 'form-input-record',
         'options' => [
             'class' => 'form-horizontal col-xs-12',
@@ -74,7 +81,7 @@ use yii\widgets\ListView;
             <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary pull-right']) ?>
         </div>
     </div>
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); }?>
 </div>
 
 <!-- END FORM NEW RECORD-->

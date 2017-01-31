@@ -11,6 +11,9 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -18,16 +21,6 @@ $config = [
             'rules' => [
                 '' => 'site/index',
                 'record/<id:\d+>' => 'site/record',
-//                [
-//                    'pattern' => '<action>/<id:\d+>',
-//                    'route' => '<action>',
-//                    'suffix' => ''
-//                ],
-//                [
-//                    'pattern' => '<controller>/<action>',
-//                    'route' => '<controller>/<action>',
-//                    'suffix' => ''
-//                ],
             ],
         ],
         'request' => [
@@ -39,7 +32,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'loginUrl' => ['site/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -61,6 +54,37 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+    ],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+        ],
+        'rbac' => [
+            'class' => 'mdm\admin\Module',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    /* 'userClassName' => 'app\models\User', */
+                    'idField' => 'id',
+                    'usernameField' => 'username',
+                ],
+            ],
+            'layout' => 'left-menu',
+            'mainLayout' => '@app/views/layouts/admin.php',
+        ]
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+//            'site/error',
+//            'site/reg', //signup
+//            'site/login',
+//            'site/logout',
+//            'site/record',
+//            'admin/*',
+//            'rbac/*',
+        ]
     ],
     'params' => $params,
 ];
